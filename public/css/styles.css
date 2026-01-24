@@ -1,0 +1,294 @@
+/******* Change Box Model ***************/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --dark: #111827;
+  --accent: #0ea5b7;
+  --blue: #0b74c9;
+  --text: #111827;
+  --muted: #374151;
+  --border: #d1d5db;
+  --bg: #ffffff;
+  --wrapper-bg: #ffffff;
+}
+
+/* Checkerboard page background like the sample */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  line-height: 1.5;
+  background: url("/images/site/checkerboard.jpg");
+  background-size: 240px;
+}
+
+/* Main white card */
+#wrapper {
+  max-width: 1100px;
+  margin: 1rem auto;
+  background: var(--wrapper-bg);
+  border-radius: 0.35rem;
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+/* Give content breathing room */
+main {
+  padding: 1rem 1.25rem 2rem;
+}
+
+/* HEADER */
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1rem 1.25rem 0.5rem;
+}
+
+.siteName a {
+  font-size: 2rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--text);
+}
+
+#tools a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+}
+
+#tools a:hover {
+  text-decoration: underline;
+}
+
+/* NAV */
+.main-nav {
+  margin: 0.5rem 1.25rem 0;
+  background: var(--dark);
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  display: flex;
+  gap: 1.75rem;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.nav-link:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+/* PAGE TITLE */
+.page-title {
+  margin: 1.25rem 0 1rem;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+/* HERO */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+  position: relative;
+}
+
+.hero-card {
+  max-width: 360px;
+}
+
+.hero-name {
+  margin: 0 0 0.25rem;
+  color: var(--blue);
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.hero-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.75rem;
+  color: var(--blue);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.own-today img {
+  width: 150px;
+  height: auto;
+  display: block;
+}
+
+.hero-img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  justify-self: end;
+}
+
+/* BELOW HERO */
+.home-grid {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 2rem;
+}
+
+/* Headings */
+.upgrades h2,
+.reviews h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+/* Reviews list */
+.review-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--muted);
+}
+
+.review-list li {
+  margin: 0.45rem 0;
+}
+
+/* Upgrades grid */
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  max-width: 520px;
+}
+
+.upgrade-card {
+  margin: 0;
+}
+
+.upgrade-img {
+  background: var(--accent);
+  border: 2px solid #0b1220;
+  padding: 0.8rem;
+  display: grid;
+  place-items: center;
+  height: 105px; /* keeps boxes consistent */
+}
+
+.upgrade-img img {
+  max-width: 70px;
+  height: auto;
+  display: block;
+}
+
+.upgrade-card figcaption {
+  text-align: center;
+  margin-top: 0.35rem;
+}
+
+.upgrade-card a {
+  color: #1d4ed8;
+}
+
+/* FOOTER */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.nav-list {
+  justify-content: center;
+}
+
+/* Desktop layout (one media query) */
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .home-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 2.5rem;
+  }
+
+  .upgrades {
+    order: 1;
+  }
+
+  .reviews {
+    order: 2;
+  }
+}
+.nav-link {
+  padding: 0.25rem 0.15rem;
+  border-radius: 0.25rem;
+}
+
+.nav-link:hover {
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-link:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.own-today img {
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.18));
+}
+
+.own-today img:hover {
+  transform: translateY(-2px);
+  transition: transform 120ms ease-in-out;
+}
+.upgrade-img {
+  border-radius: 0.4rem;
+}
+
+.upgrade-card figcaption a {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.upgrade-card figcaption a:hover {
+  text-decoration: underline;
+}
+.review-list {
+  line-height: 1.7;
+}
+
+.reviews {
+  padding-top: 0.25rem;
+}
+#wrapper {
+  overflow: hidden; /* keeps border radius clean */
+}
+@media (max-width: 600px) {
+  .hero-img {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 420px) {
+  .upgrade-grid {
+    grid-template-columns: 1fr;
+  }
+}
