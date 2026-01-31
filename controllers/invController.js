@@ -3,15 +3,12 @@ const utilities = require("../utilities")
 
 const invCont = {}
 
-// existing controller methods...
-
 invCont.buildInventoryDetail = async function (req, res, next) {
-  const inv_id = parseInt(req.params.inv_id)
+  const inv_id = parseInt(req.params.inv_id, 10)
   const nav = await utilities.getNav()
 
   const vehicle = await invModel.getInventoryById(inv_id)
 
-  // If no vehicle found, send to 404 handler
   if (!vehicle) {
     const err = new Error("Vehicle not found")
     err.status = 404
@@ -25,6 +22,34 @@ invCont.buildInventoryDetail = async function (req, res, next) {
     nav,
     vehicleHTML,
   })
+}
+
+/* ****************************************
+ * Build inventory by classification name
+ * URL example: /inv/type/sedan
+ **************************************** */
+invCont.buildByClassificationName = async function (req, res, next) {
+  const classificationName = req.params.classificationName
+  const nav = await utilities.getNav()
+
+  const data = await invModel.getInventoryByClassificationName(classificationName)
+
+  // DO NOT throw 404 just because there are no vehicles.
+  // The grid builder will show a friendly message.
+  const grid = utilities.buildClassificationGrid(data)
+
+  res.render("inventory/classification", {
+    title: `${classificationName} vehicles`,
+    nav,
+    grid,
+  })
+}
+
+/* ****************************************
+ * Intentional error trigger (Assignment 3 Task 3)
+ **************************************** */
+invCont.triggerError = async function (req, res, next) {
+  throw new Error("Intentional 500 error for testing")
 }
 
 module.exports = invCont

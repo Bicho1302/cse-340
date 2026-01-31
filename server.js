@@ -13,6 +13,7 @@ require("dotenv").config()
 
 const app = express()
 const staticRoutes = require("./routes/static")
+const inventoryRoute = require("./routes/inventoryRoute")
 
 /* ***********************
  * Middleware
@@ -32,6 +33,7 @@ app.set("layout", "./layouts/layout")
  * Routes
  *************************/
 app.use(staticRoutes)
+app.use("/inv", inventoryRoute) 
 
 // Index route
 app.get("/", (req, res) => {
@@ -50,4 +52,3 @@ const host = process.env.HOST || "localhost"
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
-
