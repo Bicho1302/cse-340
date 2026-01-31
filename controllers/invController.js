@@ -34,16 +34,23 @@ invCont.buildByClassificationName = async function (req, res, next) {
 
   const data = await invModel.getInventoryByClassificationName(classificationName)
 
-  // DO NOT throw 404 just because there are no vehicles.
-  // The grid builder will show a friendly message.
+  // If nothing found, still show the page (optional), or throw 404 if you want
+  // I recommend showing the page with the "no vehicles" message.
+  const displayName =
+  classificationName.length <= 3
+    ? classificationName.toUpperCase()
+    : classificationName.charAt(0).toUpperCase() + classificationName.slice(1).toLowerCase()
+
+
   const grid = utilities.buildClassificationGrid(data)
 
   res.render("inventory/classification", {
-    title: `${classificationName} vehicles`,
+    title: `${displayName} Vehicles`,
     nav,
     grid,
   })
 }
+
 
 /* ****************************************
  * Intentional error trigger (Assignment 3 Task 3)
