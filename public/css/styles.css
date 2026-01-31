@@ -215,6 +215,27 @@ main {
 .nav-list {
   justify-content: center;
 }
+.vehicle-detail {
+  display: grid;
+  gap: 1rem;
+}
+
+.vehicle-detail__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.vehicle-detail__price {
+  font-size: 1.2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .vehicle-detail {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
 
 /* Desktop layout (one media query) */
 @media (min-width: 900px) {
