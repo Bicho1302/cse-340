@@ -50,6 +50,8 @@ invCont.buildByClassificationName = async function (req, res, next) {
  **************************************** */
 invCont.triggerError = async function (req, res, next) {
   throw new Error("Intentional 500 error for testing")
+  utilities.handleErrors(invController.triggerError)
+
 }
 
 module.exports = invCont
