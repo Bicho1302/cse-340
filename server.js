@@ -10,16 +10,36 @@ const path = require("path")
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 require("dotenv").config()
+const session = require("express-session")
+const flash = require("connect-flash")
 
 const app = express()
 const staticRoutes = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities") // ✅ add once, use everywhere
 
+
 /* ***********************
  * Middleware
  *************************/
 app.use(express.static(path.join(__dirname, "public")))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+)
+
+app.use(flash())
+
+// Make flash messages available in all views
+app.use((req, res, next) => {
+  res.locals.notice = req.flash("notice")
+  next()
+})
 
 /* ***********************
  * View Engine and Layouts

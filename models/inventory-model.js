@@ -59,9 +59,62 @@ async function getInventoryById(inv_id) {
     throw error
   }
 }
+/* *****************************
+ * Add new classification
+ ***************************** */
+async function addClassification(classification_name) {
+  try {
+    const sql = `
+      INSERT INTO classification (classification_name)
+      VALUES ($1)
+      RETURNING classification_id, classification_name;
+    `
+    const data = await pool.query(sql, [classification_name])
+    return data.rows[0]
+  } catch (error) {
+    throw error
+  }
+}
+
+/* *****************************
+ * Add new inventory item
+ ***************************** */
+async function addInventoryItem(item) {
+  try {
+    const sql = `
+      INSERT INTO inventory
+      (inv_make, inv_model, inv_year, inv_description,
+       inv_image, inv_thumbnail, inv_price,
+       inv_miles, inv_color, classification_id)
+      VALUES
+      ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+      RETURNING inv_id;
+    `
+
+    const params = [
+      item.inv_make,
+      item.inv_model,
+      parseInt(item.inv_year),
+      item.inv_description,
+      item.inv_image,
+      item.inv_thumbnail,
+      parseFloat(item.inv_price),
+      parseInt(item.inv_miles),
+      item.inv_color,
+      parseInt(item.classification_id),
+    ]
+
+    const data = await pool.query(sql, params)
+    return data.rows[0]
+  } catch (error) {
+    throw error
+  }
+}
 
 module.exports = {
   getClassifications,
   getInventoryByClassificationName,
   getInventoryById,
+  addClassification,
+  addInventoryItem,
 }
