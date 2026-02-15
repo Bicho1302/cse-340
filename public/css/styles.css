@@ -313,3 +313,115 @@ main {
     grid-template-columns: 1fr;
   }
 }
+ul.notice { padding: 12px; border-radius: 6px; margin: 12px 0; }
+ul.error  { padding: 12px; border-radius: 6px; margin: 12px 0; }
+.account-form {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+.account-form label {
+  display: block;
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.account-form input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.35rem;
+  border-radius: 6px;
+}
+
+.account-form button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 999px;
+}
+
+.account-alt {
+  text-align: center;
+  margin-top: 1rem;
+}
+/* Page title */
+.account-title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Card container */
+.account-card {
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Form layout */
+.account-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-form label {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.account-form input {
+  padding: 0.7rem;
+  margin-top: 0.3rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease;
+}
+
+.account-form input:focus {
+  outline: none;
+  border-color: #0077ff;
+  box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.2);
+}
+
+/* Password helper text */
+.password-hint {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+/* Button styling */
+.account-form button {
+  margin-top: 1.5rem;
+  padding: 0.9rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: bold;
+  background: linear-gradient(135deg, #0077ff, #0055cc);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.account-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 119, 255, 0.3);
+}
+main ul.notice, main ul.error {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+main ul.notice li, main ul.error li {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+}
+
+main ul.notice li { background: #e8f2ff; border: 1px solid #b8d6ff; }
+main ul.error li  { background: #ffecec; border: 1px solid #ffb8b8; }

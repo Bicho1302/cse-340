@@ -1,10 +1,12 @@
 const invModel = require("../models/inventory-model")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ============================
    Build Navigation (dynamic)
 ============================ */
 async function getNav() {
-  const data = await invModel.getClassifications() // array of rows
+  const data = await invModel.getClassifications()
 
   let nav = "<ul>"
   nav += '<li><a href="/" title="Home page">Home</a></li>'
@@ -22,15 +24,12 @@ async function getNav() {
   return nav
 }
 
-
 /* ============================
    Build Classification Grid HTML
-   (used for /inventory/type/:classificationName)
 ============================ */
 function buildClassificationGrid(data) {
   let grid = '<ul id="inv-display">'
 
-  // Optional: show a friendly message if no vehicles exist
   if (!data || data.length === 0) {
     grid += "<li class='notice'>Sorry, no matching vehicles could be found.</li>"
     grid += "</ul>"
@@ -61,7 +60,6 @@ function buildClassificationGrid(data) {
 
 /* ============================
    Build Vehicle Detail HTML
-   (used for /inventory/detail/:inv_id)
 ============================ */
 function buildVehicleDetailHTML(vehicle) {
   const price = new Intl.NumberFormat("en-US", {
@@ -102,9 +100,9 @@ function handleErrors(fn) {
     Promise.resolve(fn(req, res, next)).catch(next)
   }
 }
+
 /* ============================
    Build Classification <select>
-   (used for add-inventory form)
 ============================ */
 async function buildClassificationList(classification_id = null) {
   const data = await invModel.getClassifications()
@@ -115,7 +113,10 @@ async function buildClassificationList(classification_id = null) {
 
   data.forEach((row) => {
     classificationList += `<option value="${row.classification_id}"`
-    if (classification_id && Number(row.classification_id) === Number(classification_id)) {
+    if (
+      classification_id &&
+      Number(row.classification_id) === Number(classification_id)
+    ) {
       classificationList += " selected"
     }
     classificationList += `>${row.classification_name}</option>`
@@ -125,6 +126,57 @@ async function buildClassificationList(classification_id = null) {
   return classificationList
 }
 
+/* ****************************************
+ * Middleware to check token validity
+ **************************************** */
+function checkJWTToken(req, res, next) {
+  // defaults for every request
+  res.locals.loggedin = false
+  res.locals.accountData = null
+
+  const token = req.cookies.jwt
+  if (!token) return next()
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, accountData) => {
+    if (err) {
+      // invalid/expired token -> clear cookie, continue as guest
+      res.clearCookie("jwt")
+      return next()
+    }
+    res.locals.accountData = accountData
+    res.locals.loggedin = true
+    return next()
+  })
+}
+
+/* ****************************************
+ * Check Login
+ **************************************** */
+function checkLogin(req, res, next) {
+  if (res.locals.loggedin) {
+    return next()
+  }
+  req.flash("notice", "Please log in.")
+  return res.redirect("/account/login")
+}
+
+/* ****************************************
+ * Check Employee or Admin
+ * Only allow Employee/Admin to access inventory admin routes
+ **************************************** */
+function checkEmployeeOrAdmin(req, res, next) {
+  const type = res.locals.accountData?.account_type
+
+  if (res.locals.loggedin && (type === "Employee" || type === "Admin")) {
+    return next()
+  }
+
+  req.flash(
+    "notice",
+    "You must be logged in as an Employee or Admin to access that area."
+  )
+  return res.redirect("/account/login")
+}
 
 module.exports = {
   getNav,
@@ -132,4 +184,7 @@ module.exports = {
   buildVehicleDetailHTML,
   handleErrors,
   buildClassificationList,
+  checkJWTToken,
+  checkLogin,
+  checkEmployeeOrAdmin,
 }
