@@ -14,7 +14,7 @@ require("dotenv").config()
 // Sessions + messages packages (activity)
 const session = require("express-session")
 const flash = require("connect-flash")
-const messages = require("express-messages")
+
 const pgSession = require("connect-pg-simple")(session)
 
 // Other middleware you already use
@@ -57,7 +57,7 @@ app.use(
 // Flash + express-messages (activity requirement)
 app.use(flash())
 app.use((req, res, next) => {
-  res.locals.messages = messages(req, res)
+  res.locals.notice = req.flash("notice") // ALWAYS an array
   next()
 })
 
@@ -78,6 +78,7 @@ app.set("layout", "./layouts/layout")
 app.use(staticRoutes)
 app.use("/inv", inventoryRoute)
 app.use("/account", accountRoute)
+app.use("/favorites", require("./routes/favoriteRoute"))
 
 // Optional home route if staticRoutes doesn't handle it
 app.get("/", (req, res) => {

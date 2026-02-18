@@ -1,4 +1,25 @@
 <section class="content">
   <h1><%= title %></h1>
+
   <%- vehicleHTML %>
+
+  <% if (loggedin) { %>
+    <% if (!isFav) { %>
+      <form method="post" action="/favorites/add">
+        <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+        <button type="submit" class="fav-btn fav-add">
+          ⭐ Add to Favorites
+        </button>
+      </form>
+    <% } else { %>
+      <form method="post" action="/favorites/remove">
+        <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+        <button type="submit" class="fav-btn fav-remove">
+          ❌ Remove from Favorites
+        </button>
+      </form>
+    <% } %>
+  <% } else { %>
+    <p><a href="/account/login">Log in</a> to save favorites.</p>
+  <% } %>
 </section>

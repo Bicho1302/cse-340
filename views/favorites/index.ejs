@@ -1,0 +1,50 @@
+<%- include("../partials/head") %>
+<body>
+  
+
+  
+
+  <main class="content favorites-page">
+    <h1><%= title %></h1>
+
+    <% if (!favorites || favorites.length === 0) { %>
+      <p>You have no favorites yet. Go to a vehicle detail page and click “Add to favorites”.</p>
+    <% } else { %>
+      <ul class="fav-grid">
+        <% favorites.forEach(v => { %>
+          <li class="fav-card">
+            <a class="fav-thumb" href="/inv/detail/<%= v.inv_id %>">
+              <img
+                src="<%= v.inv_thumbnail %>"
+                alt="Thumbnail of <%= v.inv_make %> <%= v.inv_model %>"
+                loading="lazy"
+              />
+            </a>
+
+            <div class="fav-info">
+              <h2 class="fav-title">
+                <a href="/inv/detail/<%= v.inv_id %>">
+                  <%= v.inv_year %> <%= v.inv_make %> <%= v.inv_model %>
+                </a>
+              </h2>
+
+              <p class="fav-price">
+                $<%= new Intl.NumberFormat("en-US").format(v.inv_price) %>
+              </p>
+
+              <p class="fav-meta"><%= v.classification_name %></p>
+
+              <form method="post" action="/favorites/remove" class="fav-actions">
+                <input type="hidden" name="inv_id" value="<%= v.inv_id %>">
+                <button type="submit" class="fav-btn fav-remove">Remove</button>
+              </form>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </main>
+
+  
+</body>
+</html>

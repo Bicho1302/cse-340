@@ -425,3 +425,232 @@ main ul.notice li, main ul.error li {
 
 main ul.notice li { background: #e8f2ff; border: 1px solid #b8d6ff; }
 main ul.error li  { background: #ffecec; border: 1px solid #ffb8b8; }
+/* ===============================
+   Favorites Button Styling
+================================ */
+
+.fav-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Add to favorites */
+.fav-add {
+  background-color: #1e88e5;
+  color: #ffffff;
+}
+
+.fav-add:hover {
+  background-color: #1565c0;
+  transform: translateY(-2px);
+}
+
+/* Remove from favorites */
+.fav-remove {
+  background-color: #e53935;
+  color: #ffffff;
+}
+
+.fav-remove:hover {
+  background-color: #c62828;
+  transform: translateY(-2px);
+}
+.fav-btn:active {
+  transform: scale(0.95);
+}
+/* ===============================
+   Favorites Page
+================================ */
+
+.favorites-page h1 {
+  margin: 1rem 0 1.25rem;
+}
+
+.fav-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.fav-card {
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fav-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.fav-thumb {
+  display: block;
+  background: #f3f4f6;
+}
+
+.fav-thumb img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.fav-info {
+  padding: 0.9rem 1rem 1rem;
+}
+
+.fav-title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.fav-title a {
+  text-decoration: none;
+}
+
+.fav-price {
+  margin: 0.6rem 0 0.25rem;
+  font-weight: 700;
+}
+
+.fav-meta {
+  margin: 0 0 0.8rem;
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+
+/* Button */
+.fav-btn {
+  width: 100%;
+  padding: 0.55rem 0.9rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.fav-btn:active {
+  transform: scale(0.98);
+}
+
+.fav-remove {
+  background: #e53935;
+  color: #fff;
+}
+
+.fav-remove:hover {
+  opacity: 0.92;
+}
+#tools {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem 1rem;
+}
+
+#tools a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#tools a:hover {
+  text-decoration: underline;
+}
+/* ===============================
+   Account Page Styling
+================================ */
+
+.account-page h1 {
+  margin-bottom: 1rem;
+}
+
+.account-section {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.account-section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.account-section p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Inputs */
+.account-section input {
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-right: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.account-section input:focus {
+  outline: none;
+  border-color: #1e88e5;
+  box-shadow: 0 0 0 2px rgba(30,136,229,0.15);
+}
+
+/* Buttons */
+.account-btn {
+  background: #1e88e5;
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.account-btn:hover {
+  opacity: 0.9;
+}
+
+.account-btn:active {
+  transform: scale(0.97);
+}
+
+/* Password Button Variation */
+.account-btn-danger {
+  background: #e53935;
+}
+.account-section label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+.notice {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: rgba(30, 136, 229, 0.12);
+  border: 1px solid rgba(30, 136, 229, 0.25);
+}
+
+.notice p {
+  margin: 0.25rem 0;
+  font-weight: 600;
+}

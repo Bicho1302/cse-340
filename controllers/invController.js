@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities")
+const favoriteModel = require("../models/favorite-model")
 
 const invCont = {}
 
@@ -21,10 +22,21 @@ invCont.buildInventoryDetail = async function (req, res, next) {
 
   const vehicleHTML = utilities.buildVehicleDetailHTML(vehicle)
 
+  // ✅ Favorites check (SAFE - inside controller only)
+  let isFav = false
+  if (res.locals.loggedin && res.locals.accountData?.account_id) {
+    isFav = await favoriteModel.isFavorite(
+      res.locals.accountData.account_id,
+      inv_id
+    )
+  }
+
   res.render("inventory/detail", {
     title: `${vehicle.inv_make} ${vehicle.inv_model}`,
     nav,
     vehicleHTML,
+    vehicle,   // pass full vehicle object to view
+    isFav,     // pass favorite status
   })
 }
 
@@ -36,7 +48,8 @@ invCont.buildByClassificationName = async function (req, res, next) {
   const classificationName = req.params.classificationName
   const nav = await utilities.getNav()
 
-  const data = await invModel.getInventoryByClassificationName(classificationName)
+  const data =
+    await invModel.getInventoryByClassificationName(classificationName)
 
   const displayName =
     classificationName.length <= 3
@@ -54,7 +67,7 @@ invCont.buildByClassificationName = async function (req, res, next) {
 }
 
 /* ****************************************
- * Intentional error trigger (Assignment 3 Task 3)
+ * Intentional error trigger
  * GET /inv/trigger-error
  **************************************** */
 invCont.triggerError = async function (req, res, next) {
@@ -62,7 +75,7 @@ invCont.triggerError = async function (req, res, next) {
 }
 
 /* ****************************************
- * Management view (Assignment 4 Task 1)
+ * Management view
  * GET /inv/
  **************************************** */
 invCont.buildManagement = async function (req, res, next) {
@@ -75,7 +88,7 @@ invCont.buildManagement = async function (req, res, next) {
 }
 
 /* ****************************************
- * Build Add Classification view (Task 2)
+ * Build Add Classification view
  * GET /inv/add-classification
  **************************************** */
 invCont.buildAddClassification = async function (req, res, next) {
@@ -89,7 +102,7 @@ invCont.buildAddClassification = async function (req, res, next) {
 }
 
 /* ****************************************
- * Process Add Classification (Task 2)
+ * Process Add Classification
  * POST /inv/add-classification
  **************************************** */
 invCont.addClassification = async function (req, res, next) {
@@ -99,7 +112,7 @@ invCont.addClassification = async function (req, res, next) {
 
   if (result) {
     req.flash("notice", "✅ Classification added successfully.")
-    const nav = await utilities.getNav() // rebuild nav immediately
+    const nav = await utilities.getNav()
     return res.render("inventory/management", {
       title: "Inventory Management",
       nav,
@@ -118,7 +131,7 @@ invCont.addClassification = async function (req, res, next) {
 }
 
 /* ****************************************
- * Build Add Inventory view (Task 3)
+ * Build Add Inventory view
  * GET /inv/add-inventory
  **************************************** */
 invCont.buildAddInventory = async function (req, res, next) {
@@ -131,7 +144,6 @@ invCont.buildAddInventory = async function (req, res, next) {
     classificationList,
     errors: null,
 
-    // sticky defaults (blank on first load)
     inv_make: "",
     inv_model: "",
     inv_year: "",
@@ -146,7 +158,7 @@ invCont.buildAddInventory = async function (req, res, next) {
 }
 
 /* ****************************************
- * Process Add Inventory (Task 3)
+ * Process Add Inventory
  * POST /inv/add-inventory
  **************************************** */
 invCont.addInventory = async function (req, res, next) {
@@ -188,7 +200,8 @@ invCont.addInventory = async function (req, res, next) {
 
   req.flash("notice", "❌ Sorry, the inventory item could not be added.")
   const nav = await utilities.getNav()
-  const classificationList = await utilities.buildClassificationList(classification_id)
+  const classificationList =
+    await utilities.buildClassificationList(classification_id)
 
   return res.status(500).render("inventory/add-inventory", {
     title: "Add Inventory",
@@ -196,7 +209,6 @@ invCont.addInventory = async function (req, res, next) {
     classificationList,
     errors: null,
 
-    // ✅ sticky values returned
     inv_make,
     inv_model,
     inv_year,

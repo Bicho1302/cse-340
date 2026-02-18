@@ -8,7 +8,14 @@
       <%- include('../partials/navigation') %>
 
       <main>
-        <%- messages() %>
+      <% if (notice && notice.length) { %>
+  <div class="notice">
+    <% notice.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
 
         <%- body %>
       </main>
